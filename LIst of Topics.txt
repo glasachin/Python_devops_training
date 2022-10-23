@@ -1,0 +1,12 @@
+Python
+	-Advanced concepts
+	-OOPs Concepts
+
+Django
+Flask
+AWS webservices
+AI/ML
+	-Tensorflow
+
+
+Project
