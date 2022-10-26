@@ -1,12 +1,16 @@
 Python
-	-Advanced concepts
+	-Advanced concepts (Mainly OOPS)
 	-OOPs Concepts
-
+Python Packages
+	- Asyncio
+	- Modular Approach
+Database Concepts
 Django
 Flask
 AWS webservices
+MongoDB
 AI/ML
 	-Tensorflow
-
+BLE
 
 Project
