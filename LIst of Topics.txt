@@ -1,10 +1,13 @@
 Python
-	-Advanced concepts (Mainly OOPS)
+	-Basic & Advanced concepts
+		1. Lambda functions 
 	-OOPs Concepts
 Python Packages
 	- Asyncio
 	- Modular Approach
 Database Concepts
+	- Basics of Database
+	- Python programs for DB interaction
 Django
 Flask
 AWS webservices
