@@ -17,3 +17,8 @@ AI/ML
 BLE
 
 Project
+
+-----------------good links------------------
+Python Tutor for Visualization
+https://pythontutor.com/visualize.html#mode=edit
+
