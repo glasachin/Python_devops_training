@@ -1,8 +1,16 @@
-Python
+-----------------Manage----------------
+git
+------------------Frontend----------------------
+HTML
+CSS
+JS
+Node.js
+-----------------Backend------------------------
+Python (Done 50%, need only practice)
 	-Basic & Advanced concepts
 		1. Lambda functions 
 	-OOPs Concepts
-Python Packages
+Python Packages (Done, need only practice)
 	- Asyncio
 	- Modular Approach
 Database Concepts
@@ -12,8 +20,10 @@ Django
 Flask
 AWS webservices
 MongoDB
+----------------------Machine Learning-------------------
 AI/ML
 	-Tensorflow
+-----------------Other--------------------------------
 BLE
 
 Project
