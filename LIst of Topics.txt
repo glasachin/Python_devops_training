@@ -27,7 +27,10 @@ AI/ML
 BLE
 
 Project
-
+------------------Deployment-----------------
+Apache
+gunicorn
+nginx
 -----------------good links------------------
 Python Tutor for Visualization
 https://pythontutor.com/visualize.html#mode=edit
