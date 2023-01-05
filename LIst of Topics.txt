@@ -1,3 +1,7 @@
+Objective: 
+1. To gain the latest knowledge in Web-Development based on Python and make myself job ready in a
+company with python requirement. 
+
 -------DevOPS----------
 IBM Full Stack Software Developer Professional Certificate (coursera)
 	1. Introduction to Cloud Computing
