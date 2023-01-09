@@ -17,6 +17,7 @@ IBM Full Stack Software Developer Professional Certificate (coursera)
 	11. Full Stack Cloud Development Capstone Project
 	12. Full Stack Software Developer Assessment
 Advanced Django: Mastering Django and Django Rest Framework Specialization
+Python Scripting for DevOps Specialization
 -----------------Manage----------------
 git
 ------------------Frontend----------------------
@@ -49,7 +50,9 @@ AI/ML
 -----------------Other--------------------------------
 BLE
 
-Project
+Projects --> Python stand alonge and DevOps
+	1. https://www.knowledgehut.com/blog/devops/devops-projects
+	2. https://www.ibm.com/devops?utm_content=SRCWW&p1=Search&p4=43700069631030295&p5=p&gclid=CjwKCAiAk--dBhABEiwAchIwkSQVq9rizfM2ofVaDsOJlZaVpKrdWCMCGDHfZ5AWzXN9IptBNZSrmBoC700QAvD_BwE&gclsrc=aw.ds
 ------------------Deployment-----------------
 Apache
 gunicorn
