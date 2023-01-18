@@ -1,0 +1,126 @@
+body{
+    background-color: black;
+    margin: 10px;
+}
+
+#home{
+    background-color: purple;
+    margin-top: -1;
+    margin-right: -1;
+    margin-left: -1;
+    padding-bottom: 1cm;
+}
+
+header{
+    font-size: 30px;
+    color: rgb(230, 173, 221);
+    float: left;
+    padding-left: 2cm;
+}
+
+.topdiv{
+    float: right;
+    padding-right: 1cm;
+}
+
+.topmenu{
+    color: lightgray;
+    background-color: purple;
+    margin: 10px;
+    padding: 10px;
+    font-size: 20px;
+    font: optional;
+}
+
+.topmenu:hover{
+    color: white;
+    font-weight: bolder;
+    background-color: purple;
+    font: optional;
+}
+
+#all-conversion-sections{
+    justify-content: center;
+    display: grid;
+}
+
+figure{
+    float: left;
+    justify-self: auto;
+    width: 200px;
+}
+
+img{
+    width: 200px;
+}
+
+figcaption{
+    color: black;
+    font-size: 17px;
+    text-align: center;
+}
+
+button{
+    font-size: 20px;
+    border: transparent;
+    border-radius: 40px;
+    width: fit-content;
+    background-color: lightgreen;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.b{
+    border-top: solid;
+    border-top-width: 20px;
+    border-radius: 10px;
+    background-color: white;
+    width: 600px;
+    height: 400px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+}
+
+.temperature{
+    border-top-color: green;
+}
+
+.weight{
+    border-top-color: coral;
+}
+
+.distance{
+    border-top-color: cyan;
+}
+
+legend{
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.iconbutton{
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-items: center;
+    border-radius: 100%;
+    background-color: cyan;
+    display: flex;
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+}
+
+.iconbutton img{
+    width: 30px;
+}
+
+footer{
+    background-color: pink;
+    margin-top: 20px;
+}
