@@ -4,6 +4,7 @@ company with python requirement.
 
 -------DevOPS----------
 IBM Full Stack Software Developer Professional Certificate (coursera)
+(have a look in the course on IBM Back-End Development Professional Certificate)
 	1. Introduction to Cloud Computing
 	2. Introduction to Web Development with HTML, CSS, JavaScript
 	3. Getting Started with Git and GitHub
