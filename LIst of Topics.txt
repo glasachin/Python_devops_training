@@ -19,6 +19,16 @@ IBM Full Stack Software Developer Professional Certificate (coursera)
 	12. Full Stack Software Developer Assessment
 Advanced Django: Mastering Django and Django Rest Framework Specialization
 Python Scripting for DevOps Specialization
+
+------------------Deep Learning--------------
+Deep Learning Specialization
+
+	1. Neural Networks and Deep Learning
+	2. Improving Deep Neural Networks: Hyperparameter tuning, Regularization and Optimization
+	3. Structuring Machine Learning Projects
+	4. Confolutional Neural Networks
+	5. Sequence Models
+
 -----------------Manage----------------
 git
 ------------------Frontend----------------------
