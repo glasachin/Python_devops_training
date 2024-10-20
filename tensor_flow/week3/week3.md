@@ -50,3 +50,41 @@ The simplest form of batching stacks n consecutive elements of a dataset into a 
 
 the simplest way to iterate over a dataset in multiple epochs is to use the `Dataset.repeat()` transformation.
 
+## Training workflows
+
+### Processing multiple epochs
+
+`tf.data` API has two main ways to process multiple epochs of the same data.
+
+1. `Dataset.repeas()` transformation
+2. Randomly shuffling input data: `Dataset.shuffle()`
+
+
+## Pre-processing data
+
+`Dataset.map(f)` transformation produces a new dataset b applying a given function `f` to each element of the input dataset. 
+
+## Applying arbitrary python logic
+we can also use external python libraries when parsing input data, instead of tensor flow operations using `tf.py_function()` operation.
+
+
+## Using High-Level APIs
+
+### tf.keras
+`tf.keras` API simplifies many aspects of creating and executing machine learning models. Its `.fit()`, `.evaluate()` and `.predict()` APIs support datasets as inputs. 
+
+**e.g. sequential model**
+```
+model = tf.keras.Sequential()
+model.compile()
+model.fit(lsda.repeat(), .....)
+model.evaluate()
+model.predict()
+```
+
+### tf.estimator
+
+
+
+## Building Data Pipelines for Tensorflow-Part 2
+
