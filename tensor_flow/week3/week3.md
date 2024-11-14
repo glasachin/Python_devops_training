@@ -88,3 +88,15 @@ model.predict()
 
 ## Building Data Pipelines for Tensorflow-Part 2
 
+
+
+
+## Text Processing with TF
+
+1. Clean up document: Remove headers, footers, common formating, page number etc.
+2. Content:
+    * Tokenize the content. E.g. "Everything that is not save will be lost". We  will tokenize all words across 'whitespaces'
+    * Convert words into numbers
+    * create `n-grams` using sliding window of n tokens. E.g. `one-grams` or `uni-gram`, window of one token. for `bi-grams` we have sliding window of size 3 and so-on.
+
+`TF.Text` library provides collection of text related classes and ops ready to use with TF.
