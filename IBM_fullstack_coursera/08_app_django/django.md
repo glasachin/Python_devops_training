@@ -121,3 +121,27 @@ Finally, note a relationship is defined, using ForeignKey. That tells Django eac
 3. Run python manage.py migrate to apply those changes to the database.
 
 
+## Static Files
+Static files are files like `CSS, JavaScript, images, and fonts` that don’t change dynamically and are served to the client as-is. Django `runserver` doesn't deliver them during production, so, it is good to put them in a proper application wise format.
+
+### Folder Structure for Static Files
+myproject/
+│
+├── myapp/
+│   ├── static/
+│   │   └── myapp/
+│   │       ├── css/
+│   │       │   └── style.css
+│   │       ├── js/
+│   │       │   └── script.js
+│   │       └── images/
+│   │           └── logo.png
+│   ├── templates/
+│   │   └── base.html
+│   └── views.py
+│
+├── staticfiles/  # Only created during deployment or after `collectstatic` 
+├── manage.py
+└── settings.py
+
+

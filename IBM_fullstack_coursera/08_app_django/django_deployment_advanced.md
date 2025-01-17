@@ -47,6 +47,21 @@ No, you do not need to manually change the image paths or references in your HTM
 2. Verify the `STATIC_URL` and `STATIC_ROOT` settings are correctly configured.
 3. Make sure you configure your production web server (e.g., `Nginx` or `Apache`) to serve the static files from the `STATIC_ROOT` directory.
 
+### Configuration in settings.py
+
+**URL to access static files**
+
+STATIC_URL = '/static/'
+
+**Absolute path where collected static files will be stored (for production)**
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+**Additional directories to search for static files (optional)**
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # For project-level static files
+]
+
+
 
 ## WSGI
 WSGI (Web Server Gateway Interface) is a specification that defines how web servers communicate with web applications written in Python. It acts as a standard interface between web servers (such as Apache, Nginx, or Gunicorn) and Python web applications or frameworks (such as Flask, Django, or Pyramid).
@@ -64,46 +79,64 @@ WSGI defines a simple and consistent format for both the input (request) and out
 
 WSGI stands for Web Server Gateway Interface. It is a specification for a simple and universal interface between web servers and Python web applications or frameworks. WSGI is part of the Python standard (defined in PEP 333 and updated with PEP 3333 for Python 3).
 
-Purpose of WSGI
-To provide a standardized way for web servers to communicate with Python applications.
-To separate the web server and the web application logic, enabling the development of portable web applications that can run on any WSGI-compliant server.
-How WSGI Works
-A WSGI server (like Gunicorn, uWSGI, or mod_wsgi) listens for HTTP requests from clients, translates them into a Python-specific format, and sends them to a WSGI-compatible application.
-A WSGI application is a callable (usually a function or a class with a __call__ method) that accepts two arguments:
-environ: A dictionary containing CGI-like environment variables.
-start_response: A callable to start the HTTP response.
+### Purpose of WSGI
+* To provide a standardized way for web servers to communicate with Python applications.
+* To separate the web server and the web application logic, enabling the development of portable web applications that can run on any WSGI-compliant server.
+### How WSGI Works
+* A WSGI server (`like Gunicorn, uWSGI, or mod_wsgi`) listens for HTTP requests from clients, translates them into a `Python-specific format`, and sends them to a WSGI-compatible application.
+* A WSGI application is a callable (usually a function or a class with a __call__ method) that accepts two arguments:
+    1. `environ`: A dictionary containing CGI-like environment variables.
+    2. `start_response`: A callable to start the HTTP response.
 The WSGI application processes the request, generates a response, and passes it back to the server, which sends it to the client.
 
-Example WSGI Application
-Here's a minimal WSGI application:
+### Benefits of WSGI
+1. Portability: Any WSGI-compliant application can run on any WSGI-compliant server.
+2. Flexibility: Decouples application logic from server specifics.
+3. Scalability: Enables integration with robust WSGI servers for handling production-level traffic.
+### Popular WSGI Servers
+1. `Gunicorn`: A Python WSGI HTTP server often used with Flask, Django, and other frameworks.
+2. `uWSGI`: A fast application server that supports multiple languages, including Python.
+3. `mod_wsgi`: An `Apache module` for hosting WSGI applications.
+### Relationship with Frameworks
+Modern Python web frameworks like `Flask, Django, FastAPI, and Pyramid are WSGI-compliant`, meaning they can interface with any WSGI server. However, some newer frameworks like FastAPI are moving toward ASGI (Asynchronous Server Gateway Interface) for better support of asynchronous features.
 
-python
-Copy
-Edit
-def simple_app(environ, start_response):
-    status = '200 OK'
-    headers = [('Content-Type', 'text/plain')]
-    start_response(status, headers)
-    return [b"Hello, WSGI World!"]
+## ASGI
+ASGI stands for `Asynchronous Server Gateway Interface`. It is a specification designed to provide a standard interface between asynchronous-capable Python web servers, applications, and frameworks. It was created as an evolution of WSGI to support modern web development requirements, such as handling asynchronous programming and protocols beyond HTTP.
 
- To run this, you need a WSGI server like Gunicorn:
- gunicorn myapp:simple_app
-Benefits of WSGI
-Portability: Any WSGI-compliant application can run on any WSGI-compliant server.
-Flexibility: Decouples application logic from server specifics.
-Scalability: Enables integration with robust WSGI servers for handling production-level traffic.
-Popular WSGI Servers
-Gunicorn: A Python WSGI HTTP server often used with Flask, Django, and other frameworks.
-uWSGI: A fast application server that supports multiple languages, including Python.
-mod_wsgi: An Apache module for hosting WSGI applications.
-Relationship with Frameworks
-Modern Python web frameworks like Flask, Django, FastAPI, and Pyramid are WSGI-compliant, meaning they can interface with any WSGI server. However, some newer frameworks like FastAPI are moving toward ASGI (Asynchronous Server Gateway Interface) for better support of asynchronous features.
+### Purpose of ASGI
+* To support asynchronous frameworks and libraries, which are increasingly common in Python.
+* To enable handling of long-lived connections, such as WebSockets, HTTP/2, and other real-time communication protocols.
+* To build on the foundation of WSGI while extending its capabilities to include both synchronous and asynchronous communication.
 
+ASGI is defined in ASGI specification.
 
+### How ASGI Works
+An `ASGI server (e.g., Uvicorn, Daphne, Hypercorn)` interacts with an ASGI application using a standardized protocol. The application is defined as a callable that takes two arguments:
 
-
-
+1. `scope`: A dictionary containing details about the connection (e.g., HTTP request, WebSocket connection, or other protocol metadata).
+2. `receive`: An asynchronous callable to receive events from the client (e.g., HTTP body data or WebSocket messages).
+3. `send`: An asynchronous callable to send events to the client (e.g., HTTP responses or WebSocket messages).
 
 
+### Features of ASGI
+1. `Asynchronous Support`: Allows handling of asynchronous I/O operations, enabling high concurrency.
+2. `Protocol Agnostic`: Supports protocols like HTTP, WebSockets, and more.
+3. `Backward Compatibility`: Can interoperate with WSGI applications using adapters.
+4. `Scalability`: Enables better handling of real-time communication and long-lived connections.
+
+### Popular ASGI Servers
+1. `Uvicorn`: A lightning-fast ASGI server built on uvloop and httptools.
+2. `Daphne`: Developed as part of the Django Channels project.
+3. `Hypercorn`: An ASGI server compatible with HTTP/2 and WebSockets.
+
+
+## Comparison: ASGI vs. WSGI
+Feature	|WSGI|	ASGI
+---|---|---
+Protocols Supported|	HTTP|	HTTP, WebSockets, HTTP/2
+Async Support|	No|	Yes
+Long-lived Connections	|Limited	|Fully supported
+Use Cases|	Traditional web apps	|Real-time apps, APIs, WebSockets
+Modernity|	Older standard (2003)|	Newer standard (2018)
 
 
