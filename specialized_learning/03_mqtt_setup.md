@@ -409,6 +409,7 @@ Yes, the Mosquitto broker supports persistent sessions as defined by the MQTT pr
 2. Using Persistent Sessions in Clients (such as paho library): set `clean_session or clean_start` to `False`
 
 
+
 ## Clients limit for MQTT
 The number of MQTT subscriber clients that can run on a single Ubuntu server depends on several factors, including the server's hardware resources, the MQTT broker being used, and the nature of the MQTT communication (e.g., message frequency, payload size, QoS levels).
 
@@ -423,3 +424,42 @@ Apart from several other factors, it is very important as well. Linux, including
 Also, configure `ulimit` and adjust `systemd` service limits if needed.
 
 `NOTE: Client and Subscriber are different things. A client can have multiple subscribers`
+
+
+## Separate Clients for Subscriber and Publisher
+Yes, creating separate MQTT clients for subscribers and publishers can be a good practice depending on your use case and system requirements. While a single MQTT client can handle both subscribing and publishing, separating the two roles has several advantages. 
+
+Advantages of Separate MQTT Clients
+Separation of Concerns:
+
+Each client can focus on a single responsibility: publishing or subscribing, simplifying the logic in your application.
+Scalability:
+
+You can independently scale publishers and subscribers based on their workloads.
+For example, a system might need many subscribers for data processing but fewer publishers.
+Reliability:
+
+If one client encounters issues (e.g., the subscriber), it won’t affect the other (e.g., the publisher), increasing overall system robustness.
+Performance:
+
+Separate clients reduce the likelihood of resource contention, such as message processing delays when handling both publishing and subscribing.
+Security:
+
+With separate clients, you can assign different access permissions for each role in the broker's ACL (Access Control List).
+For example:
+Publisher client: Write-only permission on a specific topic.
+Subscriber client: Read-only permission on that topic.
+Protocol or Library Limitations:
+
+Some MQTT libraries or implementations may have constraints when handling both roles in a single client, making separate clients a better choice.
+
+### Best Practices
+
+1. Unique Client IDs: Ensure each client has a unique identifier to avoid conflicts.
+2. Topic Wildcards: Use MQTT `wildcards (e.g., + or #)` for subscribers if `multiple topics` are involved.
+3. Resource Management: Monitor and optimize memory and CPU usage, especially on constrained devices.
+4. Broker Configuration: Define separate roles and permissions for publishers and subscribers in the broker's configuration.
+
+
+
+
