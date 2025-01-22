@@ -140,3 +140,87 @@ Use Cases|	Traditional web apps	|Real-time apps, APIs, WebSockets
 Modernity|	Older standard (2003)|	Newer standard (2018)
 
 
+## Questions
+
+**If django creates a thread for one api hit then what will happen when 100 users simultaneously hit the same api**
+
+When 100 users simultaneously hit the same API in a Django application, how the system handles the load depends on the following factors:
+
+1. Django's Default Behavior with Threads
+WSGI Server:
+
+Django itself does not handle threading; it delegates that responsibility to the underlying WSGI server (e.g., Gunicorn, uWSGI, or Django's development server).
+The default Django development server is single-threaded and not suitable for production. For simultaneous requests, you must use a production-ready WSGI server.
+Threading in WSGI Servers:
+
+Many WSGI servers (e.g., Gunicorn) can be configured to use multiple workers and threads.
+Each request is handled by a worker process or thread, depending on the server configuration.
+2. What Happens When 100 Requests Hit the Same API?
+Requests Are Distributed Across Workers:
+
+Each worker or thread processes one request at a time.
+If your server has limited workers/threads (e.g., 10 threads), requests exceeding this number will be queued.
+Concurrency:
+
+If the WSGI server is configured with multiple threads, it can handle requests concurrently, but it’s limited by the number of available threads.
+Queuing:
+
+If the number of incoming requests exceeds the capacity of the threads/workers, the extra requests will be queued.
+The queue size is configurable in many WSGI servers. If the queue fills up, additional requests may be dropped or rejected.
+Blocking Operations:
+
+If your API performs blocking operations (e.g., database queries, file I/O, external API calls), it can tie up a thread and reduce the server's ability to handle concurrent requests.
+This can lead to increased response times or timeouts for users.
+3. Key Factors Impacting Performance
+Number of Workers/Threads:
+
+More workers/threads can handle more simultaneous requests but require more system resources (CPU, memory).
+Request Processing Time:
+
+If the API is computationally intensive or has slow external dependencies, it will reduce throughput.
+Database and External Dependencies:
+
+Slow database queries or external API calls can become bottlenecks, limiting how quickly requests can be processed.
+Server Hardware:
+
+CPU, memory, and I/O capabilities determine how many requests your server can handle simultaneously.
+4. How to Handle High Concurrency
+Use an Asynchronous Server (Optional):
+
+Django, by default, is synchronous. Consider using ASGI (Django with an ASGI server like Daphne or Uvicorn) for truly asynchronous handling.
+Optimize Worker and Thread Configuration:
+
+Tune your WSGI/ASGI server configuration for your workload.
+Example for Gunicorn:
+bash
+Copy
+Edit
+gunicorn --workers=4 --threads=8 myproject.wsgi:application
+Optimize the API Code:
+
+Avoid blocking operations.
+Use asynchronous libraries for database queries or I/O if using ASGI.
+Implement Caching:
+
+Use caching (e.g., Redis, Memcached) to reduce the need for repetitive database queries or expensive computations.
+Horizontal Scaling:
+
+Add more application servers behind a load balancer to distribute traffic.
+Database Optimization:
+
+Index database tables appropriately and optimize queries to reduce latency.
+5. Summary
+Django's default configuration (development server) is not suitable for handling simultaneous requests in production.
+Using a production-grade WSGI server like Gunicorn or uWSGI allows you to handle multiple requests concurrently by configuring multiple workers and threads.
+For 100 simultaneous requests:
+Requests are queued if workers/threads are busy.
+Blocking operations can reduce the number of requests the server can handle concurrently.
+For optimal performance:
+Use appropriate server configurations, caching, and database optimizations.
+Consider using ASGI for highly concurrent and non-blocking APIs.
+
+
+
+
+
+
