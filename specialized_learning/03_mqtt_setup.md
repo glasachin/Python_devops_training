@@ -619,6 +619,99 @@ Small Applications: Integrate MQTT into Django for simplicity.
 Scalable or Complex Systems: Use a separate MQTT handler for better performance, scalability, and fault isolation.
 The decision should align with your system’s complexity, traffic patterns, and future scalability requirements.
 
+**can we have multiple on_message function in mqtt subscription**
+
+In MQTT subscription, you cannot have multiple on_message callback functions directly because most MQTT client libraries (like the popular Python paho-mqtt library) support only one on_message function per client. However, you can implement functionality to achieve a similar result by:
+
+Routing Messages to Multiple Handlers: Use a single on_message function to route messages to multiple custom handlers based on the topic.
+
+Using Multiple Clients: Run multiple MQTT clients, each with its own on_message function, subscribing to different topics.
+
+1. Routing Messages to Multiple Handlers
+You can define multiple custom handler functions and call them based on the topic in a single on_message function.
+
+Example:
+python
+Copy
+Edit
+import paho.mqtt.client as mqtt
+
+# Define custom handlers for specific topics
+def handle_temperature(topic, payload):
+    print(f"Temperature Handler: {payload}")
+
+def handle_humidity(topic, payload):
+    print(f"Humidity Handler: {payload}")
+
+# Main on_message function
+def on_message(client, userdata, msg):
+    topic = msg.topic
+    payload = msg.payload.decode()
+
+    # Route to specific handlers based on the topic
+    if topic == "sensor/temperature":
+        handle_temperature(topic, payload)
+    elif topic == "sensor/humidity":
+        handle_humidity(topic, payload)
+    else:
+        print(f"Unhandled topic: {topic}, Payload: {payload}")
+
+# MQTT client setup
+client = mqtt.Client()
+client.on_message = on_message
+
+# Subscribe to topics
+client.connect("mqtt.eclipse.org", 1883, 60)
+client.subscribe("sensor/temperature")
+client.subscribe("sensor/humidity")
+
+# Start the MQTT loop
+client.loop_forever()
+2. Using Multiple Clients
+Create separate MQTT clients, each with its own on_message function, subscribing to specific topics.
+
+Example:
+python
+Copy
+Edit
+import paho.mqtt.client as mqtt
+
+# Client 1 for temperature
+def on_message_temperature(client, userdata, msg):
+    print(f"Temperature: {msg.payload.decode()}")
+
+client1 = mqtt.Client()
+client1.on_message = on_message_temperature
+client1.connect("mqtt.eclipse.org", 1883, 60)
+client1.subscribe("sensor/temperature")
+
+# Client 2 for humidity
+def on_message_humidity(client, userdata, msg):
+    print(f"Humidity: {msg.payload.decode()}")
+
+client2 = mqtt.Client()
+client2.on_message = on_message_humidity
+client2.connect("mqtt.eclipse.org", 1883, 60)
+client2.subscribe("sensor/humidity")
+
+# Run clients in separate threads
+client1.loop_start()
+client2.loop_start()
+
+# Keep the main thread running
+try:
+    while True:
+        pass
+except KeyboardInterrupt:
+    client1.loop_stop()
+    client2.loop_stop()
+Which Approach to Choose?
+Routing Messages:
+Best if you want to manage multiple topics efficiently in a single client.
+Easier to implement and uses fewer resources.
+Multiple Clients:
+Useful if you want to isolate handling for different topics or need separate configurations for each client.
+Suitable for more complex setups but uses more resources.
 
 
 
