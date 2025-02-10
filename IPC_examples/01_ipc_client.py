@@ -10,7 +10,7 @@ mqttAppPublishData = {
             }
 try:
     
-    address = ('127.0.0.1', 8002)
+    address = ('127.0.0.1', 9003)
     conn = Client(address, authkey='kimbalNilm'.encode())
     conn.send(json.dumps(mqttAppPublishData))
     conn.send('close')
