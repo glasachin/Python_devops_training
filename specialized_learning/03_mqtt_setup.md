@@ -620,8 +620,101 @@ Scalable or Complex Systems: Use a separate MQTT handler for better performance,
 The decision should align with your system’s complexity, traffic patterns, and future scalability requirements.
 
 
+## Keep Alive
+The `keep-alive` setting in `Mosquitto MQTT broker` defines how often a client must send a message (PINGREQ or actual data) to maintain the connection. This prevents the broker from assuming the client is offline.
+
+**How Does Keep-Alive Work?**
+
+* When a client connects to the broker, it specifies a keep-alive interval (in seconds).
+* If the broker does not receive any message from the client within 1.5 times the keep-alive interval, it disconnects the client.
+* The client sends PINGREQ messages periodically if no data is being transmitted, and the broker responds with PINGRESP.
+
+✅ Setting Keep-Alive in Mosquitto
+1️⃣ Configure Keep-Alive in Client (Recommended)
+Clients can set the keep-alive interval when connecting.
+
+🔸 In Arduino (Using ArduinoMqttClient Library)
+```
+mqttClient.setKeepAliveInterval(30);  // Set keep-alive to 30 seconds
+mqttClient.connect(mqtt_server, mqtt_port);
+```
+✔️ Ensures the broker expects a message every 30 seconds.
+
+2️⃣ Configure Keep-Alive in Mosquitto Broker
+You can set default keep-alive behavior in Mosquitto’s configuration file.
+
+`Edit the Mosquitto Config File (e.g., /etc/mosquitto/mosquitto.conf):`
+```
+keepalive_interval 60
+```
+Restart Mosquitto:
+sh
+Copy
+Edit
+```
+sudo systemctl restart mosquitto
+```
+✔️ This sets the default keep-alive for clients not explicitly setting it.
+
+🔹 What Happens If Keep-Alive Fails?
+If a client misses its keep-alive deadline:
+
+The broker disconnects the client.
+If LWT (Last Will and Testament) is set, the broker sends an offline status message.
+
+🔹 Default Keep-Alive Interval in Mosquitto
+The default keep-alive interval in the Mosquitto MQTT broker depends on the client settings:
+
+If the client specifies a keep-alive interval, Mosquitto uses that value.
+If the client does not specify a keep-alive interval, Mosquitto defaults to 60 seconds.
+
+🔹 What Happens If a Client Exceeds Keep-Alive?
+If a client fails to send a message (publish, subscribe, or PINGREQ) within 1.5 times the keep-alive interval, the broker disconnects the client.
+Example:
+Keep-alive = 60 sec
+Mosquitto waits up to 90 sec (1.5 × 60 sec) before disconnecting the client.
 
 
+🔹 Default Keep-Alive Interval in Mosquitto
+The default keep-alive interval in the Mosquitto MQTT broker depends on the client settings:
 
+If the client specifies a keep-alive interval, Mosquitto uses that value.
+If the client does not specify a keep-alive interval, Mosquitto defaults to 60 seconds.
+🔹 What Happens If a Client Exceeds Keep-Alive?
+If a client fails to send a message (publish, subscribe, or PINGREQ) within 1.5 times the keep-alive interval, the broker disconnects the client.
+Example:
+Keep-alive = 60 sec
+Mosquitto waits up to 90 sec (1.5 × 60 sec) before disconnecting the client.
+🔹 How to Change the Keep-Alive Interval?
+1️⃣ On the Client Side (Recommended)
+Set the keep-alive interval when connecting:
 
+In Arduino (Using ArduinoMqttClient Library):
+cpp
+Copy
+Edit
+mqttClient.setKeepAliveInterval(30);  // Set keep-alive to 30 seconds
+In Python (Using paho-mqtt Library):
+python
+Copy
+Edit
+client.connect("broker.hivemq.com", 1883, keepalive=45)  # 45 sec
+In Mosquitto CLI (mosquitto_sub or mosquitto_pub):
+sh
+Copy
+Edit
+mosquitto_sub -h broker.hivemq.com -t "test/topic" -k 30
+2️⃣ On the Mosquitto Broker Side
+If you want Mosquitto to enforce a default keep-alive interval, you can modify its configuration:
+
+Edit the Mosquitto config file (/etc/mosquitto/mosquitto.conf):
+ini
+Copy
+Edit
+keepalive_interval 120  # Set default keep-alive to 120 seconds
+Restart Mosquitto for changes to take effect:
+sh
+Copy
+Edit
+sudo systemctl restart mosquitto
 
