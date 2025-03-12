@@ -1,5 +1,18 @@
 # Models
 
+## Migrations
+
+1. `python manage.py makemigrations`: To create migrations
+2. `python manage.py migrate`: To apply migrations
+3. `python manage.py showmigrations`: To check migrations history
+4. Making migrations to specific app
+    * `python manage.py makemigrations your_app_name`
+    * `python manage.py migrate your_app_name`
+
+**Common Issues and Fixes**
+1. Forgot to apply migrations? → Run `migrate`
+2. Database locked or error? → Try `python manage.py migrate --fake`
+3. Changed a field type and got errors? → Use `--fake-initial`
 
 ## Can We Access One App's Models in Another App in Django?
 
